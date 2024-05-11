@@ -103,7 +103,6 @@
             ];
         });
 
-      hydraJobs = import ./hydra/jobs.nix {inherit (self) inputs outputs; };
       formatter = pkgs.nixfmt-rfc-style;
 
       # defines applications that could be ran with nix run
@@ -115,5 +114,8 @@
         };
         default = sync;
       };
-    });
+    })
+      //
+      {hydraJobs = import ./hydra/jobs.nix {inherit (self) inputs outputs; };}
+  ;
 }
