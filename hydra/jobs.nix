@@ -14,6 +14,7 @@ in
 # getCfg = _: cfg: cfg.config.system.build.toplevel;
 {
   # hosts = lib.mapAttrs getCfg outputs.nixosConfigurations;
+  devShells = outputs.devShells;
   formatter = outputs.formatter;
   packages = lib.mapAttrs filterValidPkgs outputs.packages;
 }
