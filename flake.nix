@@ -49,6 +49,14 @@
         # if you don't want the default that nixpkgs is supplying to you (as of april 2022, 3.11.8),
         # you must manually specify it. the desired version will not be sourced from poetry.lock
         python_version = pkgs.python312;
+
+        # add extra packages you want available in the dev env
+        devPackages = [
+          pkgs.poetry
+          pkgs.just
+          pkgs.dive
+          pkgs.nodePackages.prettier
+        ];
       in
       {
         packages = {
@@ -82,9 +90,9 @@
         # if this was not done, you'd need to rebuild the shell every time you make a
         # change and want to see it reflected, and debugging would be horrific (believe me I tried it)
         # the editable packages correspond to what's in pyproject.toml
-        devShells.default =
-          let
-            env = poetry2nix.mkPoetryEnv {
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
+            (poetry2nix.mkPoetryEnv {
               projectDir = ./.;
               overrides = overrides;
               python = python_version;
@@ -92,17 +100,19 @@
                 sync = ./sync;
                 jsonl_formatter = ./jsonl_formatter;
               };
-            };
-          in
-          env.env.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-              # add extra packages you want available in the dev env
-              pkgs.poetry
-              pkgs.just
-              pkgs.dive
-              pkgs.nodePackages.prettier
-            ];
-          });
+            }
+              # let
+              #   env =
+              # in
+              # env.env.overrideAttrs (old: {
+              #   packages = (old.packages or [ ]) ++ devPackages;
+              #   buildInputs = (old.buildInputs or [ ]) ++ devPackages;
+              #   nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ devPackages;
+              # })
+            )
+            devPackages
+          ];
+        };
 
         formatter = pkgs.nixfmt-rfc-style;
 
