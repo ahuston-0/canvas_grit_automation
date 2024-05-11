@@ -26,7 +26,7 @@ let
 
   prs = readJSONFile pulls;
   refs = readJSONFile branches;
-  repo = "ahuston-0/canvas-grit-automation";
+  repo = "ahuston-0/canvas_grit_automation";
 
   # template for creating a job
   makeJob =

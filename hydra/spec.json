@@ -12,7 +12,7 @@
   "type": 0,
   "inputs": {
     "nixexpr": {
-      "value": "https://github.com/ahuston-0/canvas-grit-automation main",
+      "value": "https://github.com/ahuston-0/canvas_grit_automation main",
       "type": "git",
       "emailresponsible": false
     },
@@ -23,12 +23,12 @@
     },
     "pulls": {
       "type": "githubpulls",
-      "value": "ahuston-0 canvas-grit-automation",
+      "value": "ahuston-0 canvas_grit_automation",
       "emailresponsible": false
     },
     "branches": {
       "type": "github_refs",
-      "value": "ahuston-0 canvas-grit-automation heads -",
+      "value": "ahuston-0 canvas_grit_automation heads -",
       "emailresponsible": false
     }
   }
